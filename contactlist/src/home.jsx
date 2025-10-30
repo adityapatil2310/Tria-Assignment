@@ -8,11 +8,7 @@ const initialContacts = [
 		phone: "9876543210",
 		email: "alice@example.com",
 	},
-	{ id: 2,
-    name: "Bob Smith",
-    phone: "8765432109",
-    email: "bob@example.com",
-  },
+	{ id: 2, name: "Bob Smith", phone: "8765432109", email: "bob@example.com" },
 	{
 		id: 3,
 		name: "Charlie Brown",
@@ -59,57 +55,89 @@ export default function App() {
 
 			<div
 				className="contacts-container"
-				style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}
+				style={{
+					display: "flex",
+					gap: "24px",
+					alignItems: "flex-start",
+				}}
 			>
 				<div className="contact-list" style={{ flex: 1 }}>
 					<ul style={{ padding: 0, listStyle: "none" }}>
 						{filteredContacts.map((contact) => (
-							<li key={contact.id} style={{ marginBottom: "16px" }}>
+							<li
+								key={contact.id}
+								style={{ marginBottom: "16px" }}
+							>
 								<h2 style={{ margin: 0 }}>{contact.name}</h2>
-								<p style={{ margin: "4px 0" }}>{contact.phone}</p>
-								<p style={{ margin: "4px 0" }}>{contact.email}</p>
+								<p style={{ margin: "4px 0" }}>
+									{contact.phone}
+								</p>
+								<p style={{ margin: "4px 0" }}>
+									{contact.email}
+								</p>
 							</li>
 						))}
 					</ul>
 					{filteredContacts.length === 0 && <p>No contacts found.</p>}
 				</div>
-				<aside className="contact-form" style={{ width: 320 }}>
+				<div className="contact-form" style={{ width: 320 }}>
+					<h5>Add Contact</h5>
 					<form
 						onSubmit={handleAdd}
-						style={{ display: "flex", flexDirection: "column", gap: "8px" }}
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							gap: "8px",
+						}}
 					>
+						<label>Name *</label>
 						<input
 							type="text"
-							placeholder="Name"
+							placeholder="John Doe"
 							value={newContact.name}
 							onChange={(e) =>
-								setNewContact({ ...newContact, name: e.target.value })
+								setNewContact({
+									...newContact,
+									name: e.target.value,
+								})
 							}
 							style={{ width: "100%", boxSizing: "border-box" }}
+							required
 						/>
+						<label>Phone *</label>
 						<input
-							type="text"
-							placeholder="Phone"
+							type="tel"
+							placeholder="1234567890"
 							value={newContact.phone}
-							onChange={(e) =>
-								setNewContact({ ...newContact, phone: e.target.value })
-							}
+							onChange={(e) => {
+								const value = e.target.value
+									.replace(/\D/g, "")
+									.slice(0, 10);
+								setNewContact({ ...newContact, phone: value });
+							}}
+							pattern="[0-9]{10}"
+							maxLength="10"
 							style={{ width: "100%", boxSizing: "border-box" }}
+							required
 						/>
+						<label>Email</label>
 						<input
 							type="email"
-							placeholder="Email"
+							placeholder="john@example.com"
 							value={newContact.email}
 							onChange={(e) =>
-								setNewContact({ ...newContact, email: e.target.value })
+								setNewContact({
+									...newContact,
+									email: e.target.value,
+								})
 							}
 							style={{ width: "100%", boxSizing: "border-box" }}
 						/>
-						<button type="submit" style={{ padding: "8px 12px" }}>
+						<button type="submit">
 							Add Contact
 						</button>
 					</form>
-				</aside>
+				</div>
 			</div>
 		</div>
 	);

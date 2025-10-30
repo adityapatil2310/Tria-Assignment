@@ -2,8 +2,8 @@ body{
     font-family: Arial, sans-serif;
     margin: 20px;
     background-color: #F6FAFC;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 20%;
+    padding-right: 20%;
 }
 
 h1 {
@@ -25,27 +25,67 @@ h1 {
 }
 
 .contact-list {
-  list-style-type: none;
   padding: 0;
-  background-color: aqua;
 }
 
-.contact-list ul {
-  list-style-type: none;
+.contact-list ul{
   padding: 0;
 }
 
 .contact-list li {
-  border-bottom: 1px solid #eee;
-  padding: 12px 0;
+    padding: 2% 5%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
 }
 
 .contact-list h2 {
-  margin: 0;
   font-size: 18px;
+  font-weight: 600;
 }
 
 .contact-list p {
-  margin: 4px 0;
   color: #555;
+}
+
+.contact-form {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.contact-form h5 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.contact-form label {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.contact-form input {
+  background-color: #F6FAFC;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.contact-form input::placeholder {
+  color: #888989;
+}
+
+.contact-form button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 8px 12px;
+  background-color: #0DAAF0;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
 }
