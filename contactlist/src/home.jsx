@@ -81,7 +81,10 @@ export default function App() {
 					{filteredContacts.length === 0 && <p>No contacts found.</p>}
 				</div>
 				<div className="contact-form" style={{ width: 320 }}>
-					<h5>Add Contact</h5>
+					<div style={{ display: "flex", flexDirection: "row", marginLeft: 60, alignItems: "center", gap: 8 }}>
+						<i class="bi bi-person-add"></i>
+						<h5>Add Contact</h5>
+					</div>
 					<form
 						onSubmit={handleAdd}
 						style={{
