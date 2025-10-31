@@ -25,16 +25,31 @@ export default function App() {
 		phone: "",
 		email: "",
 	});
+	const [currentPage, setCurrentPage] = useState(1);
+	const contactsPerPage = 4;
 
 	const filteredContacts = contacts.filter((c) =>
 		c.name.toLowerCase().includes(search.toLowerCase())
 	);
+
+	// Calculate pagination
+	const indexOfLastContact = currentPage * contactsPerPage;
+	const indexOfFirstContact = indexOfLastContact - contactsPerPage;
+	const currentContacts = filteredContacts.slice(
+		indexOfFirstContact,
+		indexOfLastContact
+	);
+	const totalPages = Math.ceil(filteredContacts.length / contactsPerPage);
 
 	const handleAdd = (e) => {
 		e.preventDefault();
 		if (!newContact.name.trim()) return;
 		setContacts([...contacts, { id: Date.now(), ...newContact }]);
 		setNewContact({ name: "", phone: "", email: "" });
+	};
+
+	const handlePageChange = (pageNumber) => {
+		setCurrentPage(pageNumber);
 	};
 
 	return (
@@ -45,7 +60,10 @@ export default function App() {
 					type="text"
 					placeholder="Search contacts by name..."
 					value={search}
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {
+						setSearch(e.target.value);
+						setCurrentPage(1);
+					}}
 				/>
 			</div>
 
@@ -63,7 +81,7 @@ export default function App() {
 			>
 				<div className="contact-list" style={{ flex: 1 }}>
 					<ul style={{ padding: 0, listStyle: "none" }}>
-						{filteredContacts.map((contact) => (
+						{currentContacts.map((contact) => (
 							<li
 								key={contact.id}
 								style={{ marginBottom: "16px" }}
@@ -79,10 +97,100 @@ export default function App() {
 						))}
 					</ul>
 					{filteredContacts.length === 0 && <p>No contacts found.</p>}
+
+					{/* Pagination */}
+					{totalPages > 1 && (
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "center",
+								gap: "8px",
+								marginTop: "20px",
+							}}
+						>
+							<button
+								onClick={() =>
+									handlePageChange(currentPage - 1)
+								}
+								disabled={currentPage === 1}
+								style={{
+									padding: "8px 12px",
+									border: "1px solid #ccc",
+									borderRadius: "4px",
+									backgroundColor:
+										currentPage === 1 ? "#f5f5f5" : "#fff",
+									cursor:
+										currentPage === 1
+											? "not-allowed"
+											: "pointer",
+								}}
+							>
+								Previous
+							</button>
+							{Array.from(
+								{ length: totalPages },
+								(_, i) => i + 1
+							).map((page) => (
+								<button
+									key={page}
+									onClick={() => handlePageChange(page)}
+									style={{
+										padding: "8px 12px",
+										border: "1px solid #ccc",
+										borderRadius: "4px",
+										backgroundColor:
+											currentPage === page
+												? "#0DAAF0"
+												: "#fff",
+										color:
+											currentPage === page
+												? "#fff"
+												: "#000",
+										cursor: "pointer",
+										fontWeight:
+											currentPage === page
+												? "bold"
+												: "normal",
+									}}
+								>
+									{page}
+								</button>
+							))}
+							<button
+								onClick={() =>
+									handlePageChange(currentPage + 1)
+								}
+								disabled={currentPage === totalPages}
+								style={{
+									padding: "8px 12px",
+									border: "1px solid #ccc",
+									borderRadius: "4px",
+									backgroundColor:
+										currentPage === totalPages
+											? "#f5f5f5"
+											: "#fff",
+									cursor:
+										currentPage === totalPages
+											? "not-allowed"
+											: "pointer",
+								}}
+							>
+								Next
+							</button>
+						</div>
+					)}
 				</div>
 				<div className="contact-form" style={{ width: 320 }}>
-					<div style={{ display: "flex", flexDirection: "row", marginLeft: 60, alignItems: "center", gap: 8 }}>
-						<i class="bi bi-person-add"></i>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							marginLeft: 60,
+							alignItems: "center",
+							gap: 8,
+						}}
+					>
+						<i className="bi bi-person-add"></i>
 						<h5>Add Contact</h5>
 					</div>
 					<form
@@ -136,9 +244,7 @@ export default function App() {
 							}
 							style={{ width: "100%", boxSizing: "border-box" }}
 						/>
-						<button type="submit">
-							Add Contact
-						</button>
+						<button type="submit">Add Contact</button>
 					</form>
 				</div>
 			</div>
