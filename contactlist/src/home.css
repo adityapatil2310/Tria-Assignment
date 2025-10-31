@@ -14,11 +14,13 @@ h1 {
   text-align: center;
   margin-bottom: 2%;
   margin-top: 2%;
+  position: relative;
 }
 
 .search input {
   width: 100%;
   padding: 10px;
+  padding-left: 40px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;

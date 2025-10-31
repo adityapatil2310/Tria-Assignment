@@ -56,7 +56,19 @@ export default function App() {
 	return (
 		<div>
 			<h1>Contact List</h1>
-			<div className="search">
+			<div className="search" style={{marginBottom: "5%"}}>
+				<i 
+                    className="bi bi-search" 
+                    style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "#888",
+                        fontSize: "16px",
+                        pointerEvents: "none"
+                    }}
+                ></i>
 				<input
 					type="text"
 					placeholder="Search contacts by name..."
@@ -68,7 +80,7 @@ export default function App() {
 				/>
 			</div>
 
-			<h3 style={{ fontWeight: "bold" }}>
+			<h3 style={{ fontWeight: "bold", margin: "0"}}>
 				Contacts ({filteredContacts.length})
 			</h3>
 
@@ -193,7 +205,7 @@ export default function App() {
 							gap: "8px",
 						}}
 					>
-						<label>Name *</label>
+						<label>Name*</label>
 						<input
 							type="text"
 							placeholder="John Doe"
@@ -207,7 +219,7 @@ export default function App() {
 							style={{ width: "100%", boxSizing: "border-box" }}
 							required
 						/>
-						<label>Phone *</label>
+						<label>Phone*</label>
 						<input
 							type="tel"
 							placeholder="1234567890"

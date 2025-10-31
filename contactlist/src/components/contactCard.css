@@ -1,0 +1,19 @@
+.contact-list ul{
+  padding: 0;
+}
+
+.contact-list div {
+    padding: 2% 5%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.contact-list h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contact-list p {
+  color: #555;
+}
