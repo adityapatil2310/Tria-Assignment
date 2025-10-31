@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./home.css";
+import ContactCard from "./components/contactCard.jsx";
 
 const initialContacts = [
 	{
@@ -81,22 +82,11 @@ export default function App() {
 			>
 				<div className="contact-list" style={{ flex: 1 }}>
 					<ul style={{ padding: 0, listStyle: "none" }}>
-						{currentContacts.map((contact) => (
-							<li
-								key={contact.id}
-								style={{ marginBottom: "16px" }}
-							>
-								<h2 style={{ margin: 0 }}>{contact.name}</h2>
-								<p style={{ margin: "4px 0" }}>
-									{contact.phone}
-								</p>
-								<p style={{ margin: "4px 0" }}>
-									{contact.email}
-								</p>
-							</li>
-						))}
-					</ul>
-					{filteredContacts.length === 0 && <p>No contacts found.</p>}
+                        {currentContacts.map((contact) => (
+                            <ContactCard key={contact.id} contact={contact} />
+                        ))}
+                    </ul>
+                    {filteredContacts.length === 0 && <p>No contacts found.</p>}
 
 					{/* Pagination */}
 					{totalPages > 1 && (
@@ -185,9 +175,11 @@ export default function App() {
 						style={{
 							display: "flex",
 							flexDirection: "row",
-							marginLeft: 60,
 							alignItems: "center",
+							justifyContent: "center",
 							gap: 8,
+							height: 40,
+							fontSize: "24px",
 						}}
 					>
 						<i className="bi bi-person-add"></i>

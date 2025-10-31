@@ -28,31 +28,12 @@ h1 {
   padding: 0;
 }
 
-.contact-list ul{
-  padding: 0;
-}
-
-.contact-list li {
-    padding: 2% 5%;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-}
-
-.contact-list h2 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.contact-list p {
-  color: #555;
-}
-
 .contact-form {
   padding: 15px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #fff;
+  margin-top: 2%;
 }
 
 .contact-form h5 {
