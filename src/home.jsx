@@ -29,9 +29,14 @@ export default function App() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const contactsPerPage = 4;
 
-	const filteredContacts = contacts.filter((c) =>
-		c.name.toLowerCase().includes(search.toLowerCase())
-	);
+	const filteredContacts = contacts.filter((c) => {
+		const q = search.toLowerCase().trim();
+		const qDigits = search.replace(/\D/g, "");
+		const nameMatch = q && c.name.toLowerCase().includes(q);
+		const phoneMatch = qDigits && c.phone.replace(/\D/g, "").includes(qDigits);
+
+		return (!q && !qDigits) || nameMatch || phoneMatch;
+	});
 
 	// Calculate pagination
 	const indexOfLastContact = currentPage * contactsPerPage;
@@ -71,7 +76,7 @@ export default function App() {
                 ></i>
 				<input
 					type="text"
-					placeholder="Search contacts by name..."
+					placeholder="Search contacts by name or phone..."
 					value={search}
 					onChange={(e) => {
 						setSearch(e.target.value);
