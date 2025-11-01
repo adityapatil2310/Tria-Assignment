@@ -27,6 +27,7 @@ export default function App() {
 		email: "",
 	});
 	const [currentPage, setCurrentPage] = useState(1);
+	const [editingId, setEditingId] = useState(null);
 	const contactsPerPage = 4;
 
 	const filteredContacts = contacts.filter((c) => {
@@ -48,32 +49,63 @@ export default function App() {
 	const totalPages = Math.ceil(filteredContacts.length / contactsPerPage);
 
 	const handleAdd = (e) => {
-		e.preventDefault();
-		if (!newContact.name.trim()) return;
-		setContacts([...contacts, { id: Date.now(), ...newContact }]);
-		setNewContact({ name: "", phone: "", email: "" });
-	};
+        e.preventDefault();
+        if (!newContact.name.trim()) return;
+        
+        if (editingId) {
+            // Update existing contact
+            setContacts(contacts.map(contact => 
+                contact.id === editingId 
+                    ? { ...contact, ...newContact }
+                    : contact
+            ));
+            setEditingId(null);
+        } else {
+            // Add new contact
+            setContacts([...contacts, { id: Date.now(), ...newContact }]);
+        }
+        
+        setNewContact({ name: "", phone: "", email: "" });
+    };
 
-	const handlePageChange = (pageNumber) => {
-		setCurrentPage(pageNumber);
-	};
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const handleDelete = (contactId) => {
+        setContacts(contacts.filter(contact => contact.id !== contactId));
+    };
+
+    const handleEdit = (contact) => {
+        setNewContact({
+            name: contact.name,
+            phone: contact.phone,
+            email: contact.email || ""
+        });
+        setEditingId(contact.id);
+    };
+
+    const handleCancelEdit = () => {
+        setNewContact({ name: "", phone: "", email: "" });
+        setEditingId(null);
+    };
 
 	return (
 		<div>
 			<h1>Contact List</h1>
 			<div className="search" style={{marginBottom: "5%"}}>
 				<i 
-                    className="bi bi-search" 
-                    style={{
-                        position: "absolute",
-                        left: "12px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        color: "#888",
-                        fontSize: "16px",
-                        pointerEvents: "none"
-                    }}
-                ></i>
+					className="bi bi-search" 
+					style={{
+						position: "absolute",
+						left: "12px",
+						top: "50%",
+						transform: "translateY(-50%)",
+						color: "#888",
+						fontSize: "16px",
+						pointerEvents: "none"
+					}}
+				></i>
 				<input
 					type="text"
 					placeholder="Search contacts by name or phone..."
@@ -99,11 +131,11 @@ export default function App() {
 			>
 				<div className="contact-list" style={{ flex: 1 }}>
 					<ul style={{ padding: 0, listStyle: "none" }}>
-                        {currentContacts.map((contact) => (
-                            <ContactCard key={contact.id} contact={contact} />
-                        ))}
-                    </ul>
-                    {filteredContacts.length === 0 && <p>No contacts found.</p>}
+						{currentContacts.map((contact) => (
+							<ContactCard key={contact.id} contact={contact} onEdit={handleEdit} onDelete={handleDelete} />
+						))}
+					</ul>
+					{filteredContacts.length === 0 && <p style={{fontSize: "20px", fontWeight: 300}}>No contacts found.</p>}
 
 					{/* Pagination */}
 					{totalPages > 1 && (
@@ -253,7 +285,10 @@ export default function App() {
 							}
 							style={{ width: "100%", boxSizing: "border-box" }}
 						/>
-						<button type="submit">Add Contact</button>
+						<button type="submit">{editingId ? "Update Contact" : "Add Contact"}</button>
+						{editingId !== null && (
+							<button type="button" style={{ marginTop: "5px", backgroundColor: "#ef5959ff"}} onClick={handleCancelEdit}>Cancel</button>
+						)}
 					</form>
 				</div>
 			</div>
