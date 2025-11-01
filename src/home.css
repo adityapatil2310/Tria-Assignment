@@ -1,5 +1,5 @@
 body{
-    font-family: Arial, sans-serif;
+    font-family: 'Monaco', sans-serif;
     margin: 20px;
     background-color: #F6FAFC;
     padding-left: 20%;
@@ -8,6 +8,7 @@ body{
 
 h1 {
   text-align: center;
+  font-family: 'Copperplate';
 }
 
 .search {
@@ -71,4 +72,5 @@ h1 {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  font-family: 'Monaco';
 }

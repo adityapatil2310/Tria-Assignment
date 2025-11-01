@@ -9,7 +9,12 @@ const initialContacts = [
 		phone: "9876543210",
 		email: "alice@example.com",
 	},
-	{ id: 2, name: "Bob Smith", phone: "8765432109", email: "bob@example.com" },
+	{
+		id: 2,
+		name: "Bob Smith",
+		phone: "8765432109",
+		email: "bob@example.com"
+	},
 	{
 		id: 3,
 		name: "Charlie Brown",
@@ -72,9 +77,33 @@ export default function App() {
         setCurrentPage(pageNumber);
     };
 
-    const handleDelete = (contactId) => {
-        setContacts(contacts.filter(contact => contact.id !== contactId));
-    };
+	const handleDelete = (contactId) => {
+		setContacts((prev) => {
+			const updated = prev.filter((c) => c.id !== contactId);
+
+			// Recompute filtered contacts based on current search
+			const q = search.toLowerCase().trim();
+			const qDigits = search.replace(/\D/g, "");
+			const filteredAfterDelete = updated.filter((c) => {
+				const nameMatch = q && c.name.toLowerCase().includes(q);
+				const phoneMatch =
+					qDigits && c.phone.replace(/\D/g, "").includes(qDigits);
+				return (!q && !qDigits) || nameMatch || phoneMatch;
+			});
+
+			const totalPagesAfter = Math.ceil(
+				filteredAfterDelete.length / contactsPerPage
+			);
+
+			// If current page becomes empty, move to previous valid page (or 1)
+			setCurrentPage((prevPage) => {
+				if (totalPagesAfter === 0) return 1;
+				return prevPage > totalPagesAfter ? totalPagesAfter : prevPage;
+			});
+
+			return updated;
+		});
+	};
 
     const handleEdit = (contact) => {
         setNewContact({
@@ -232,7 +261,7 @@ export default function App() {
 						}}
 					>
 						<i className="bi bi-person-add"></i>
-						<h5>Add Contact</h5>
+						<h5>{editingId ? "Update Contact" : "Add Contact"}</h5>
 					</div>
 					<form
 						onSubmit={handleAdd}

@@ -40,7 +40,7 @@ export default function ContactCard({ contact, onEdit, onDelete }) {
                     onClick={() => onEdit(contact)}
                     style={{
                         padding: "6px 6px 6px 12px",
-                        backgroundColor: "#0DAAF0",
+                        backgroundColor: "#039a63ff",
                         color: "white",
                         border: "none",
                         borderRadius: "6px",
