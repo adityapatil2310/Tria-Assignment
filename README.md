@@ -1,43 +1,91 @@
 ## Link to [deployed app](https://contact-list-dusky-delta.vercel.app)
 
+# Contact List Application
 
-# Getting Started with Create React App
+A responsive React-based contact management application with search, pagination, and CRUD operations.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
 
-## Available Scripts
+### Core Functionality
+- **Add Contacts**: Create new contacts with name (required), phone (required), and email (optional)
+- **Edit Contacts**: Update existing contact information
+- **Delete Contacts**: Remove contacts from the list
+- **Search**: Filter contacts by name or phone number in real-time
+- **Pagination**: Navigate through contacts with 4 contacts per page
 
-In the project directory, you can run:
+### User Experience
+- **Form Validation**: 
+  - Name and phone are required fields
+  - Phone number must be exactly 10 digits
+  - Email validation for proper format
+- **Smart Cancel Button**: Only shows when form has data or is in edit mode
+- **Pagination Management**: Automatically adjusts current page when:
+  - Contacts are deleted
+  - Search filters reduce available pages
+  - Current page becomes empty
 
-### `npm start`
+### Technical Features
+- **State Management**: Efficient React hooks (useState) for managing application state
+- **Dynamic Filtering**: Real-time search that updates contact list and resets pagination
+- **Form Auto-population**: Clicking edit fills the form with existing contact data
+- **Unique IDs**: Uses timestamp-based IDs for new contacts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Assumptions & Design Decisions
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. **Phone Number Format**
+- Assumed 10-digit Indian phone numbers without country code
+- Input restricted to numeric characters only
+- No formatting (dashes, spaces, parentheses) applied
 
-### `npm test`
+### 2. **Email Field**
+- Made optional as not all contacts may have email addresses
+- Standard HTML5 email validation applied
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3. **Search Behavior**
+- Search is case-insensitive
+- Partial matches allowed for both name and phone
+- Phone search ignores non-numeric characters for flexibility
 
-### `npm run build`
+### 4. **Pagination**
+- Fixed at 4 contacts per page for optimal viewing
+- Current page automatically adjusts when:
+  - Last contact on a page is deleted
+  - Search filter reduces total pages
+- Prevents "empty page" scenarios
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 5. **Edit Mode**
+- Single form handles both add and edit operations
+- Cancel button clears form and exits edit mode
+- Cancel button visible when form has any data
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 6. **UI/UX Decisions**
+- Bootstrap Icons used for visual elements
+- Contact cards show all information upfront (no expand/collapse)
+- Edit/Delete buttons positioned top-right for easy access
+- Form appears on right side
+- Color scheme: Blue (#0DAAF0) for primary actions, Red (#ef5959ff) for delete/cancel
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation & Setup
 
-### `npm run eject`
+```bash
+# Install dependencies
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Run development server
+npm start
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Build for production
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Technologies Used
+- React 18
+- CSS3 (responsive design)
+- Bootstrap Icons
+- HTML5 form validation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Browser Compatibility
+- Chrome (recommended)
+- Firefox
+- Safari
+- Edge
