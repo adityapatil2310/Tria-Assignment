@@ -54,7 +54,7 @@ export default function ContactCard({ contact, onEdit, onDelete }) {
                     onClick={() => onDelete(contact.id)}
                     style={{
                         padding: "6px 6px 6px 10px",
-                        backgroundColor: "#dc3545",
+                        backgroundColor: "#ef5959ff",
                         color: "white",
                         border: "none",
                         borderRadius: "6px",

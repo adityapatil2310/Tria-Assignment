@@ -282,7 +282,7 @@ export default function App() {
 									name: e.target.value,
 								})
 							}
-							style={{ width: "100%", boxSizing: "border-box" }}
+							style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", fontWeight: 500 }}
 							required
 						/>
 						<label>Phone*</label>
@@ -298,7 +298,7 @@ export default function App() {
 							}}
 							pattern="[0-9]{10}"
 							maxLength="10"
-							style={{ width: "100%", boxSizing: "border-box" }}
+							style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", fontWeight: 500}}
 							required
 						/>
 						<label>Email</label>
@@ -312,10 +312,13 @@ export default function App() {
 									email: e.target.value,
 								})
 							}
-							style={{ width: "100%", boxSizing: "border-box" }}
+							style={{ width: "100%", boxSizing: "border-box", fontSize: "13px", fontWeight: 500 }}
 						/>
 						<button type="submit">{editingId ? "Update Contact" : "Add Contact"}</button>
-						{editingId !== null && (
+						{(editingId !== null ||
+						  newContact.name.trim() !== "" ||
+						  newContact.phone.trim() !== "" ||
+						  newContact.email.trim() !== "") && (
 							<button type="button" style={{ marginTop: "5px", backgroundColor: "#ef5959ff"}} onClick={handleCancelEdit}>Cancel</button>
 						)}
 					</form>
